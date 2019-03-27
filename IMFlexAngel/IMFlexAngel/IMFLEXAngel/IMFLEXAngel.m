@@ -1,79 +1,74 @@
+
 //
-//  IMFlexibleLayoutViewController.m
-//  zhuanzhuan
+//  IMFLEXAngel.m
+//  IMFLEXDemo
 //
-//  Created by 李伯坤 on 2016/10/10.
-//  Copyright © 2016年 wuba. All rights reserved.
+//  Created by 李伯坤 on 2017/12/14.
+//  Copyright © 2017年 李伯坤. All rights reserved.
 //
 
-#import "IMFlexibleLayoutViewController.h"
-#import "IMFlexibleLayoutViewController+Kernel.h"
-#import "IMFlexibleLayoutViewController+OldAPI.h"
-#import "IMFlexibleLayoutSectionModel.h"
-#import "IMFlexibleLayoutViewProtocol.h"
+#import "IMFLEXAngel.h"
+#import "IMFLEXAngel+Private.h"
+#import "IMFLEXAngel+UITableView.h"
+#import "IMFLEXAngel+UICollectionView.h"
 #import "IMFlexibleLayoutSeperatorCell.h"
+#import "IMFLEXTableViewEmptyCell.h"
 #import "IMFLEXMacros.h"
 
-@implementation IMFlexibleLayoutViewController
+/*
+ *  注册cells 到 hostView
+ */
+void RegisterHostViewCell(__kindof UIScrollView *hostView, NSString *cellName)
+{
+    if ([hostView isKindOfClass:[UITableView class]]) {
+        [(UITableView *)hostView registerClass:NSClassFromString(cellName) forCellReuseIdentifier:cellName];
+    }
+    else if ([hostView isKindOfClass:[UICollectionView class]]) {
+        [(UICollectionView *)hostView registerClass:NSClassFromString(cellName) forCellWithReuseIdentifier:cellName];
+    }
+}
 
-- (id)init
+/*
+ *  注册ReusableView 到 hostView
+ */
+void RegisterHostViewReusableView(__kindof UIScrollView *hostView, NSString *kind, NSString *viewName)
+{
+    if ([hostView isKindOfClass:[UITableView class]]) {
+        [(UITableView *)hostView registerClass:NSClassFromString(viewName) forHeaderFooterViewReuseIdentifier:viewName];
+    }
+    else if ([hostView isKindOfClass:[UICollectionView class]]) {
+        [(UICollectionView *)hostView registerClass:NSClassFromString(viewName) forSupplementaryViewOfKind:kind withReuseIdentifier:viewName];
+    }
+}
+
+@implementation IMFLEXAngel
+
+- (instancetype)initWithHostView:(__kindof UIScrollView *)hostView
 {
     if (self = [super init]) {
+        _hostView = hostView;
         _data = [[NSMutableArray alloc] init];
-        _scrollDirection = UICollectionViewScrollDirectionVertical;
-        
-        IMFlexibleLayoutFlowLayout *layout = [[IMFlexibleLayoutFlowLayout alloc] init];
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-        [self.collectionView setBackgroundColor:[UIColor clearColor]];
-        [self.collectionView setDataSource:self];
-        [self.collectionView setDelegate:self];
-        [self.collectionView setShowsHorizontalScrollIndicator:NO];
-        [self.collectionView setAlwaysBounceVertical:YES];
+        if ([_hostView isKindOfClass:[UITableView class]]) {
+            [(UITableView *)_hostView setDataSource:self];
+            [(UITableView *)_hostView setDelegate:self];
+            RegisterHostViewCell(_hostView, @"IMFLEXTableViewEmptyCell");
+        }
+        else if ([_hostView isKindOfClass:[UICollectionView class]]) {
+            [(UICollectionView *)_hostView setDataSource:self];
+            [(UICollectionView *)_hostView setDelegate:self];
+            RegisterHostViewCell(_hostView, @"IMFlexibleLayoutSeperatorCell");        // 注册空白cell
+            RegisterHostViewReusableView(_hostView, UICollectionElementKindSectionHeader, @"IMFlexibleLayoutEmptyHeaderFooterView");
+            RegisterHostViewReusableView(_hostView, UICollectionElementKindSectionFooter, @"IMFlexibleLayoutEmptyHeaderFooterView");
+        }
     }
     return self;
 }
 
-- (void)loadView
-{
-    [super loadView];
-    
-    [self.view addSubview:self.collectionView];
-    RegisterCollectionViewCell(self.collectionView, CELL_SEPEARTOR);        // 注册空白cell
-    RegisterCollectionViewReusableView(self.collectionView, UICollectionElementKindSectionHeader, @"IMFlexibleLayoutEmptyHeaderFooterView");
-    RegisterCollectionViewReusableView(self.collectionView, UICollectionElementKindSectionFooter, @"IMFlexibleLayoutEmptyHeaderFooterView");
-}
+@end
 
-- (void)dealloc
-{
-    IMFLEXLog(@"Dealloc: %@", NSStringFromClass([self class]));
-}
 
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    
-    if (!CGRectEqualToRect(self.view.bounds, self.collectionView.frame)) {
-        [self.collectionView setFrame:self.view.bounds];
-        self.updateCells.all();
-        [self reloadView];
-    }
-}
-
-#pragma mark - # API
-- (void)setScrollDirection:(UICollectionViewScrollDirection)scrollDirection
-{
-    _scrollDirection = scrollDirection;
-    [(IMFlexibleLayoutFlowLayout *)self.collectionView.collectionViewLayout setScrollDirection:scrollDirection];
-}
-
-#pragma mark 页面刷新
-/// 刷新页面
-- (void)reloadView
-{
-    [UIView performWithoutAnimation:^{
-        [self.collectionView reloadData];
-    }];
-}
+#pragma mark - ## IMFLEXAngel (API)
+@implementation IMFLEXAngel (API)
 
 #pragma mark - # 整体
 - (BOOL (^)(void))clear
@@ -85,7 +80,6 @@
         return YES;
     };
 }
-
 
 - (BOOL (^)(void))clearAllCells
 {
@@ -162,7 +156,7 @@
         
         IMFlexibleLayoutSectionModel *sectionModel = [[IMFlexibleLayoutSectionModel alloc] init];
         sectionModel.sectionTag = tag;
-
+        
         IMFLEXChainSectionInsertModel *chainSectionModel = [[IMFLEXChainSectionInsertModel alloc] initWithSectionModel:sectionModel listData:self.data];
         return chainSectionModel;
     };
@@ -211,38 +205,6 @@
     };
 }
 
-- (NSInteger)sectionIndexForTag:(NSInteger)sectionTag
-{
-    for (int section = 0; section < self.data.count; section++) {
-        IMFlexibleLayoutSectionModel *sectionModel = self.data[section];
-        if (sectionModel.sectionTag == sectionTag) {
-            return section;
-        }
-    }
-    return 0;
-}
-
-- (BOOL)deleteAllItemsForSection:(NSInteger)tag
-{
-    IMFlexibleLayoutSectionModel *sectionModel = [self sectionModelForTag:tag];
-    if (sectionModel) {
-        sectionModel.headerViewModel = nil;
-        sectionModel.footerViewModel = nil;
-        [sectionModel.itemsArray removeAllObjects];
-        return YES;
-    }
-    return NO;
-}
-
-- (BOOL)deleteAllCellsForSection:(NSInteger)tag {
-    IMFlexibleLayoutSectionModel *sectionModel = [self sectionModelForTag:tag];
-    if (sectionModel) {
-        [sectionModel.itemsArray removeAllObjects];
-        return YES;
-    }
-    return NO;
-}
-
 #pragma mark - # Section View 操作
 //MARK: Header
 - (IMFLEXChainViewModel *(^)(NSString *className))setHeader
@@ -255,7 +217,7 @@
             viewModel = [[IMFlexibleLayoutViewModel alloc] init];
             viewModel.className = className;
         }
-        RegisterCollectionViewReusableView(self.collectionView, UICollectionElementKindSectionHeader, className);
+        RegisterHostViewReusableView(self.hostView, UICollectionElementKindSectionHeader, className);
         IMFLEXChainViewModel *chainViewModel = [[IMFLEXChainViewModel alloc] initWithListData:self.data viewModel:viewModel andType:IMFLEXChainViewTypeHeader];
         return chainViewModel;
     };
@@ -272,7 +234,7 @@
             viewModel = [[IMFlexibleLayoutViewModel alloc] init];
             viewModel.className = className;
         }
-        RegisterCollectionViewReusableView(self.collectionView, UICollectionElementKindSectionFooter, className);
+        RegisterHostViewReusableView(self.hostView, UICollectionElementKindSectionFooter, className);
         IMFLEXChainViewModel *chainViewModel = [[IMFLEXChainViewModel alloc] initWithListData:self.data viewModel:viewModel andType:IMFLEXChainViewTypeFooter];
         return chainViewModel;
     };
@@ -285,7 +247,7 @@
     @weakify(self);
     return ^(NSString *className) {
         @strongify(self);
-        RegisterCollectionViewCell(self.collectionView, className);
+        RegisterHostViewCell(self.hostView, className);
         IMFlexibleLayoutViewModel *viewModel = [[IMFlexibleLayoutViewModel alloc] init];
         viewModel.className = className;
         IMFLEXChainViewModel *chainViewModel = [[IMFLEXChainViewModel alloc] initWithListData:self.data viewModel:viewModel andType:IMFLEXChainViewTypeCell];
@@ -299,7 +261,7 @@
     @weakify(self);
     return ^(NSString *className) {
         @strongify(self);
-        RegisterCollectionViewCell(self.collectionView, className);
+        RegisterHostViewCell(self.hostView, className);
         IMFLEXChainViewBatchModel *viewModel = [[IMFLEXChainViewBatchModel alloc] initWithClassName:className listData:self.data];
         return viewModel;
     };
@@ -312,7 +274,7 @@
     return ^(CGSize size, UIColor *color) {
         @strongify(self);
         IMFlexibleLayoutViewModel *viewModel = [[IMFlexibleLayoutViewModel alloc] init];
-        viewModel.className = CELL_SEPEARTOR;
+        viewModel.className = [self.hostView isKindOfClass:[UITableView class]] ? NSStringFromClass([IMFLEXTableViewEmptyCell class]) : NSStringFromClass([IMFlexibleLayoutSeperatorCell class]);
         viewModel.dataModel = [[IMFlexibleLayoutSeperatorModel alloc] initWithSize:size andColor:color];
         IMFLEXChainViewModel *chainViewModel = [[IMFLEXChainViewModel alloc] initWithListData:self.data viewModel:viewModel andType:IMFLEXChainViewTypeCell];
         return chainViewModel;
@@ -325,7 +287,7 @@
     @weakify(self);
     return ^(NSString *className) {
         @strongify(self);
-        RegisterCollectionViewCell(self.collectionView, className);
+        RegisterHostViewCell(self.hostView, className);
         IMFlexibleLayoutViewModel *viewModel = [[IMFlexibleLayoutViewModel alloc] init];
         viewModel.className = className;
         IMFLEXChainViewInsertModel *chainViewModel = [[IMFLEXChainViewInsertModel alloc] initWithListData:self.data viewModel:viewModel andType:IMFLEXChainViewTypeCell];
@@ -339,7 +301,7 @@
     @weakify(self);
     return ^(NSString *className) {
         @strongify(self);
-        RegisterCollectionViewCell(self.collectionView, className);
+        RegisterHostViewCell(self.hostView, className);
         IMFLEXChainViewBatchInsertModel *viewModel = [[IMFLEXChainViewBatchInsertModel alloc] initWithClassName:className listData:self.data];
         return viewModel;
     };
@@ -393,75 +355,6 @@
 {
     IMFLEXChainViewBatchEditModel *dataModel = [[IMFLEXChainViewBatchEditModel alloc] initWithType:IMFLEXChainViewEditTypeDataModel andListData:self.data];
     return dataModel;
-}
-
-@end
-
-#pragma mark - ## IMFlexibleLayoutViewController (View)
-@implementation IMFlexibleLayoutViewController (View)
-- (void)scrollToTop:(BOOL)animated
-{
-    [self.collectionView setContentOffset:CGPointZero animated:animated];
-}
-
-- (void)scrollToBottom:(BOOL)animated
-{
-    CGFloat y = self.collectionView.contentSize.height - self.collectionView.frame.size.height;
-    [self.collectionView setContentOffset:CGPointMake(0, y) animated:animated];
-}
-
-- (void)scrollToSection:(NSInteger)sectionTag position:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated
-{
-    if (self.hasSection(sectionTag)) {
-        NSInteger section = [self sectionIndexForTag:sectionTag];
-        NSUInteger sectionCount = [self.collectionView numberOfSections];
-        if (sectionCount > section) {
-            NSUInteger itemCount = [self.collectionView numberOfItemsInSection:section];
-            if (itemCount > 0) {
-                NSInteger index = 0;
-                if (scrollPosition == UICollectionViewScrollPositionBottom || scrollPosition == UICollectionViewScrollPositionRight) {
-                    scrollPosition = itemCount - 1;
-                }
-                else if (scrollPosition == UICollectionViewScrollPositionCenteredVertically || scrollPosition == UICollectionViewScrollPositionCenteredHorizontally) {
-                    scrollPosition = itemCount / 2.0;
-                }
-                
-                [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:section] atScrollPosition:scrollPosition animated:animated];
-            }
-        }
-    }
-}
-
-- (void)scrollToSection:(NSInteger)sectionTag cell:(NSInteger)cellTag position:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated
-{
-    NSArray *indexPaths = [self cellIndexPathForSectionTag:sectionTag cellTag:cellTag];
-    if (indexPaths.count > 0) {
-        NSIndexPath *indexPath = indexPaths[0];
-        [self scrollToIndexPath:indexPath position:scrollPosition animated:animated];
-    }
-}
-
-- (void)scrollToCell:(NSInteger)cellTag position:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated
-{
-    NSArray *indexPaths = [self cellIndexPathForCellTag:cellTag];
-    if (indexPaths.count > 0) {
-        NSIndexPath *indexPath = indexPaths[0];
-        [self scrollToIndexPath:indexPath position:scrollPosition animated:animated];
-    }
-}
-
-- (void)scrollToSectionIndex:(NSInteger)sectionIndex position:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated
-{
-    if (sectionIndex < self.data.count) {
-        [self scrollToIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex] position:scrollPosition animated:animated];
-    }
-}
-
-- (void)scrollToIndexPath:(NSIndexPath *)indexPath position:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated
-{
-    if (self.hasCell.atIndexPath(indexPath)) {
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:scrollPosition animated:animated];
-    }
 }
 
 @end
