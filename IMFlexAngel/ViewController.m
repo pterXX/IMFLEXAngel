@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "IMFlexAngel/IMFlexibleLayoutFramework.h"
+#import <Masonry/Masonry.h>
 @interface ViewController ()
 
 @end
@@ -28,15 +29,6 @@
     });
 }
 
-//- (IMTableViewChainModel * (^)(NSInteger tag))addTableView
-//{
-//    return ^IMTableViewChainModel* (NSInteger tag) {
-//        UITableView *view = [[UITableView alloc] init];
-//        [self addSubview:view];
-//        NSLog(@"%@",view.superview);
-//        IMTableViewChainModel *chainModel = [[IMChainModelClass alloc] initWithTag:tag andView:view];
-//        return chainModel;
-//    };
-//}
+
 
 @end

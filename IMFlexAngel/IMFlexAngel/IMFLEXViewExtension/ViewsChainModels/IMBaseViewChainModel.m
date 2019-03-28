@@ -8,8 +8,8 @@
 
 #import "IMBaseViewChainModel.h"
 #import "UIView+IMFrame.h"
-#if __has_include(<Masonry.h>)
-#import <Masonry.h>
+#if __has_include(<Masonry/Masonry.h>)
+#import <Masonry/Masonry.h>
 #endif
 
 #define     IMFLEX_CHAIN_VIEW_IMPLEMENTATION(methodName, IMParamType)      IMFLEX_CHAIN_IMPLEMENTATION(methodName, IMParamType, id, UIView)
@@ -76,7 +76,7 @@ IMFLEX_CHAIN_VIEW_IMPLEMENTATION(right, CGFloat);
 
 
 #pragma mark - # Layout
-#if __has_include(<Masonry.h>)
+#if __has_include(<Masonry/Masonry.h>)
 IMFLEX_CHAIN_MASONRY_IMPLEMENTATION(masonry, mas_makeConstraints);
 IMFLEX_CHAIN_MASONRY_IMPLEMENTATION(updateMasonry, mas_updateConstraints);
 IMFLEX_CHAIN_MASONRY_IMPLEMENTATION(remakeMasonry, mas_remakeConstraints);
