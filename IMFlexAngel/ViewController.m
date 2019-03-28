@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "IMFlexAngel/IMFlexibleLayoutFramework.h"
 @interface ViewController ()
 
 @end
@@ -17,7 +17,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    // 列表
+    self.view.addTableView(1)
+    .backgroundColor([UIColor redColor])
+    .tableHeaderView([UIView new])
+    .tableFooterView([UIView new])
+    .separatorStyle(UITableViewCellSeparatorStyleNone)
+    .masonry(^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(0);
+    });
 }
 
+//- (IMTableViewChainModel * (^)(NSInteger tag))addTableView
+//{
+//    return ^IMTableViewChainModel* (NSInteger tag) {
+//        UITableView *view = [[UITableView alloc] init];
+//        [self addSubview:view];
+//        NSLog(@"%@",view.superview);
+//        IMTableViewChainModel *chainModel = [[IMChainModelClass alloc] initWithTag:tag andView:view];
+//        return chainModel;
+//    };
+//}
 
 @end

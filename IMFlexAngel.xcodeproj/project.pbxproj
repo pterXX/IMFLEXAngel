@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84705983224C652A00220583 /* IMFlexAngel.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 84705982224C652A00220583 /* IMFlexAngel.podspec */; };
 		849D7A75224B58C20074AE1F /* IMFlexibleLayoutViewController+Kernel.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D7A1B224B58C10074AE1F /* IMFlexibleLayoutViewController+Kernel.m */; };
 		849D7A76224B58C20074AE1F /* IMFlexibleLayoutFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D7A1C224B58C10074AE1F /* IMFlexibleLayoutFlowLayout.m */; };
 		849D7A78224B58C20074AE1F /* IMFLEXRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D7A21224B58C10074AE1F /* IMFLEXRequestModel.m */; };
@@ -77,6 +78,7 @@
 /* Begin PBXFileReference section */
 		682D9E3CFBBF175F240D6CB2 /* Pods-IMFlexAngel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMFlexAngel.release.xcconfig"; path = "Target Support Files/Pods-IMFlexAngel/Pods-IMFlexAngel.release.xcconfig"; sourceTree = "<group>"; };
 		68A76C33D888AA0A4727598C /* Pods-IMFlexAngel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMFlexAngel.debug.xcconfig"; path = "Target Support Files/Pods-IMFlexAngel/Pods-IMFlexAngel.debug.xcconfig"; sourceTree = "<group>"; };
+		84705982224C652A00220583 /* IMFlexAngel.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = IMFlexAngel.podspec; sourceTree = "<group>"; };
 		849D7A1A224B58C10074AE1F /* IMFlexibleLayoutFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMFlexibleLayoutFlowLayout.h; sourceTree = "<group>"; };
 		849D7A1B224B58C10074AE1F /* IMFlexibleLayoutViewController+Kernel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IMFlexibleLayoutViewController+Kernel.m"; sourceTree = "<group>"; };
 		849D7A1C224B58C10074AE1F /* IMFlexibleLayoutFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMFlexibleLayoutFlowLayout.m; sourceTree = "<group>"; };
@@ -396,6 +398,7 @@
 		84E979BB224898B200DF8842 = {
 			isa = PBXGroup;
 			children = (
+				84705982224C652A00220583 /* IMFlexAngel.podspec */,
 				84E979C6224898B200DF8842 /* IMFlexAngel */,
 				84E979DF224898BB00DF8842 /* IMFlexAngelTests */,
 				84E979EA224898BB00DF8842 /* IMFlexAngelUITests */,
@@ -474,6 +477,7 @@
 				84E979C0224898B200DF8842 /* Sources */,
 				84E979C1224898B200DF8842 /* Frameworks */,
 				84E979C2224898B200DF8842 /* Resources */,
+				66FA5729152471EAC04571FE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -570,6 +574,7 @@
 				84E979D4224898BB00DF8842 /* LaunchScreen.storyboard in Resources */,
 				84E979D1224898BB00DF8842 /* Assets.xcassets in Resources */,
 				84E979CF224898B200DF8842 /* Main.storyboard in Resources */,
+				84705983224C652A00220583 /* IMFlexAngel.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +615,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		66FA5729152471EAC04571FE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IMFlexAngel/Pods-IMFlexAngel-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IMFlexAngel/Pods-IMFlexAngel-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

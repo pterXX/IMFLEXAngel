@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "IMFlexAngel"
-  s.version      = "8"
+  s.version      = "9"
   s.summary      = "IMFlexAngel."
 
   # This description is used to generate tags and improve search results.
@@ -133,7 +133,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  # s.dependency "BLNetworking"
+  s.dependency "Masonry"
   # s.dependency "BLAPIManagers"
   # s.dependency "BLMediator"
 

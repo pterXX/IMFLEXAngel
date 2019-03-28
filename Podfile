@@ -5,5 +5,5 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 target 'IMFlexAngel' do
- 
+ pod 'Masonry'                   #自动约束布局
 end
