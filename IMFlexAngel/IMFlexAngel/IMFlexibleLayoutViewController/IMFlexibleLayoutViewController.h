@@ -2,7 +2,7 @@
 //  IMFlexibleLayoutViewController.h
 //  zhuanzhuan
 //
-//  Created by 李伯坤 on 2016/10/10.
+//  Created by 徐世杰 on 2016/10/10.
 //  Copyright © 2016年 wuba. All rights reserved.
 //
 

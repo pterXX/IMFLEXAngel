@@ -2,8 +2,8 @@
 //  UIView+IMSeparator.h
 //  TLChat
 //
-//  Created by 李伯坤 on 2017/7/5.
-//  Copyright © 2017年 李伯坤. All rights reserved.
+//  Created by 徐世杰 on 2017/7/5.
+//  Copyright © 2017年 徐世杰. All rights reserved.
 //
 
 //  给View添加分割线，未完成
