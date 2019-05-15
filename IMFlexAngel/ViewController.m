@@ -27,8 +27,6 @@
     .masonry(^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(0);
     });
-    
-    ssss
 }
 
 
