@@ -47,6 +47,7 @@
 		849D7AD8224B5A2E0074AE1F /* UIButton+IMExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D7AD3224B5A2E0074AE1F /* UIButton+IMExtension.m */; };
 		849D7AD9224B5A2E0074AE1F /* UIView+IMSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D7AD4224B5A2E0074AE1F /* UIView+IMSeparator.m */; };
 		849D7ADA224B5A2E0074AE1F /* UIControl+IMEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 849D7AD5224B5A2E0074AE1F /* UIControl+IMEvent.m */; };
+		84E4CA17228CEFBF00761598 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E4CA16228CEFBF00761598 /* CollectionViewCell.m */; };
 		84E979C9224898B200DF8842 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E979C8224898B200DF8842 /* AppDelegate.m */; };
 		84E979CC224898B200DF8842 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E979CB224898B200DF8842 /* ViewController.m */; };
 		84E979CF224898B200DF8842 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E979CD224898B200DF8842 /* Main.storyboard */; };
@@ -161,6 +162,8 @@
 		849D7AD4224B5A2E0074AE1F /* UIView+IMSeparator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+IMSeparator.m"; sourceTree = "<group>"; };
 		849D7AD5224B5A2E0074AE1F /* UIControl+IMEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+IMEvent.m"; sourceTree = "<group>"; };
 		849D7AD6224B5A2E0074AE1F /* UIButton+IMExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+IMExtension.h"; sourceTree = "<group>"; };
+		84E4CA15228CEFBF00761598 /* CollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
+		84E4CA16228CEFBF00761598 /* CollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
 		84E979C4224898B200DF8842 /* IMFlexAngel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IMFlexAngel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E979C7224898B200DF8842 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		84E979C8224898B200DF8842 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -431,6 +434,8 @@
 				84E979D2224898BB00DF8842 /* LaunchScreen.storyboard */,
 				84E979D5224898BB00DF8842 /* Info.plist */,
 				84E979D6224898BB00DF8842 /* main.m */,
+				84E4CA15228CEFBF00761598 /* CollectionViewCell.h */,
+				84E4CA16228CEFBF00761598 /* CollectionViewCell.m */,
 			);
 			path = IMFlexAngel;
 			sourceTree = "<group>";
@@ -672,6 +677,7 @@
 				849D7A93224B58C20074AE1F /* IMFLEXChainViewBatchModel.m in Sources */,
 				849D7AC9224B5A1A0074AE1F /* IMButtonChainModel.m in Sources */,
 				84E979D7224898BB00DF8842 /* main.m in Sources */,
+				84E4CA17228CEFBF00761598 /* CollectionViewCell.m in Sources */,
 				849D7A78224B58C20074AE1F /* IMFLEXRequestModel.m in Sources */,
 				849D7AC4224B5A1A0074AE1F /* IMTextViewChainModel.m in Sources */,
 				849D7A91224B58C20074AE1F /* IMFLEXChainViewEditModel.m in Sources */,
